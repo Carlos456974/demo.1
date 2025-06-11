@@ -1,30 +1,21 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel de Administración</title>
+  <title>Panel de Administrador</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Panel de Administración</h1>
-    <button id="logoutBtn">Cerrar sesión</button>
-    <table border="1" width="100%" style="margin-top:20px;">
-      <thead>
-        <tr>
-          <th>Folio</th>
-          <th>Fecha</th>
-          <th>Descripción</th>
-          <th>Correo</th>
-          <th>Anónima</th>
-          <th>Estatus</th>
-        </tr>
-      </thead>
-      <tbody id="denunciasTableBody"></tbody>
-    </table>
+  <div class="wrapper">
+    <div class="container">
+      <img src="logo.jpg" alt="Logo de la empresa" class="logo">
+      <h2>Panel de Quejas</h2>
+      <div id="quejasContainer"></div>
+      <button onclick="logout()">Cerrar sesión</button>
+    </div>
   </div>
+
   <script src="admin.js"></script>
 </body>
 </html>

@@ -1,39 +1,48 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Buzón de Denuncias</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buzón de Quejas</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="wrapper">
     <div class="container">
-      <img src="logo.jpg" alt="Logo de la empresa" class="logo" />
+      <img src="logo.jpg" alt="Logo de la empresa" class="logo">
       <h2>Buzón de Denuncias</h2>
-      <form id="denunciaForm">
-        <label for="anonimo">¿Deseas que la denuncia sea anónima?</label>
-        <select id="anonimo" name="anonimo">
+      <form id="formulario">
+        <label for="nombre">¿Deseas que sea anónima?</label>
+        <select id="anonimo">
           <option value="sí">Sí</option>
           <option value="no">No</option>
         </select>
 
-        <label for="nombre">Nombre (si no es anónimo)</label>
-        <input type="text" id="nombre" name="nombre" />
+        <div id="nombreCampo">
+          <label for="nombre">Nombre (opcional si es anónima):</label>
+          <input type="text" id="nombre">
+        </div>
 
-        <label for="descripcion">Descripción de la denuncia</label>
-        <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
-
-        <button type="submit">Enviar Denuncia</button>
-
-        <div id="confirmation"></div>
+        <label for="descripcion">Descripción de la denuncia:</label>
+        <textarea id="descripcion" required></textarea>
 
         <div class="nota">
-          <p class="alerta"><strong>Nota de privacidad:</strong> Esta denuncia será manejada con estricta confidencialidad. Se garantiza el anonimato si así lo decides. Esta herramienta cumple con los lineamientos del CEMEFI para mantener la integridad organizacional.</p>
+          <input type="checkbox" id="aviso" required>
+          <label for="aviso">
+            Acepto el <a href="#" onclick="mostrarAviso()">aviso de privacidad</a>.
+          </label>
         </div>
+
+        <button type="submit">Enviar</button>
       </form>
+
+      <div id="confirmation"></div>
+      <p style="margin-top:20px;">
+        <a href="login.html" style="color:#0a1a2f; font-weight:bold;">Acceso Administrador</a>
+      </p>
     </div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,37 +1,39 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Buzón de Denuncias</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Buzón de Denuncias Electrónico</h1>
-    <p>Este formulario es confidencial y puede ser llenado de forma anónima. Cada denuncia generará un folio y recibirá seguimiento.</p>
+  <div class="wrapper">
+    <div class="container">
+      <img src="logo.jpg" alt="Logo de la empresa" class="logo" />
+      <h2>Buzón de Denuncias</h2>
+      <form id="denunciaForm">
+        <label for="anonimo">¿Deseas que la denuncia sea anónima?</label>
+        <select id="anonimo" name="anonimo">
+          <option value="sí">Sí</option>
+          <option value="no">No</option>
+        </select>
 
-    <form id="denunciaForm">
-      <label for="descripcion">Descripción de la denuncia:</label>
-      <textarea id="descripcion" name="descripcion" rows="5" required></textarea>
+        <label for="nombre">Nombre (si no es anónimo)</label>
+        <input type="text" id="nombre" name="nombre" />
 
-      <label for="correo">Correo electrónico (opcional si no es anónima):</label>
-      <input type="email" id="correo" name="correo">
+        <label for="descripcion">Descripción de la denuncia</label>
+        <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
 
-      <label><input type="checkbox" id="anonima" name="anonima"> Quiero que mi denuncia sea anónima</label>
+        <button type="submit">Enviar Denuncia</button>
 
-      <button type="submit">Enviar denuncia</button>
-    </form>
+        <div id="confirmation"></div>
 
-    <div id="confirmation" style="display:none;"></div>
-
-    <hr>
-    <p><strong>Aviso de Privacidad:</strong> Este buzón cumple con los principios de confidencialidad, consentimiento, finalidad, y proporcionalidad según CEMEFI. La información proporcionada será utilizada únicamente para fines de investigación interna y mejora del entorno laboral.</p>
-    
-    <p><a href="login.html">Acceso para administradores</a></p>
+        <div class="nota">
+          <p class="alerta"><strong>Nota de privacidad:</strong> Esta denuncia será manejada con estricta confidencialidad. Se garantiza el anonimato si así lo decides. Esta herramienta cumple con los lineamientos del CEMEFI para mantener la integridad organizacional.</p>
+        </div>
+      </form>
+    </div>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>

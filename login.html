@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso Administrador</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Iniciar Sesión Administrador</h2>
+    <form id="loginForm">
+      <label for="usuario">Usuario:</label>
+      <input type="text" id="usuario" required>
+      <label for="password">Contraseña:</label>
+      <input type="password" id="password" required>
+      <label><input type="checkbox" id="verPassword"> Ver contraseña</label>
+      <button type="submit">Entrar</button>
+    </form>
+    <div id="mensaje" style="color:red;margin-top:10px;"></div>
+  </div>
+
+  <script>
+    document.getElementById("verPassword").addEventListener("change", function () {
+      const pass = document.getElementById("password");
+      pass.type = this.checked ? "text" : "password";
+    });
+
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const usuario = document.getElementById("usuario").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if(usuario === "admin" && password === "admin123"){
+        localStorage.setItem("adminLogueado", "true");
+        window.location.href = "admin.html";
+      } else {
+        document.getElementById("mensaje").textContent = "Usuario o contraseña incorrectos";
+      }
+    });
+  </script>
+</body>
+</html>

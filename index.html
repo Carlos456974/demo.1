@@ -1,29 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Buzón de Quejas</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css"/>
 </head>
-<body>
+<body class="bg-marino">
+  <div class="logo-wrapper">
+    <img src="logo.jpg" alt="Logo de la empresa" class="logo">
+  </div>
   <div class="wrapper">
     <div class="container">
-      <img src="logo.jpg" alt="Logo de la empresa" class="logo">
-      <h2>Buzón de Denuncias</h2>
+      <h2>Buzón de Quejas</h2>
       <form id="formulario">
-        <label for="nombre">¿Deseas que sea anónima?</label>
-        <select id="anonimo">
+        <label for="anonimo">¿Deseas que sea anónima?</label>
+        <select id="anonimo" required>
           <option value="sí">Sí</option>
           <option value="no">No</option>
         </select>
 
         <div id="nombreCampo">
-          <label for="nombre">Nombre (opcional si es anónima):</label>
+          <label for="nombre">Nombre:</label>
           <input type="text" id="nombre">
+          <label for="correo">Correo electrónico:</label>
+          <input type="email" id="correo">
         </div>
 
-        <label for="descripcion">Descripción de la denuncia:</label>
+        <label for="categoria">Categoría de la queja:</label>
+        <select id="categoria" required>
+          <option value="" disabled selected>Selecciona una</option>
+          <option value="violencia">Violencia de género</option>
+          <option value="maltrato">Maltrato de jefe</option>
+          <option value="compañero">Problema con compañero</option>
+          <option value="otro">Otro</option>
+        </select>
+
+        <label for="descripcion">Descripción de la queja:</label>
         <textarea id="descripcion" required></textarea>
 
         <div class="nota">
@@ -33,16 +46,29 @@
           </label>
         </div>
 
-        <button type="submit">Enviar</button>
+        <button type="submit">Enviar Queja</button>
       </form>
 
       <div id="confirmation"></div>
+
       <p style="margin-top:20px;">
-        <a href="login.html" style="color:#0a1a2f; font-weight:bold;">Acceso Administrador</a>
+        <a href="estatus.html">Consultar estatus de una queja</a> |
+        <a href="login.html">Acceso Administrador</a>
       </p>
     </div>
   </div>
 
   <script src="script.js"></script>
+  <script>
+    document.getElementById('categoria').addEventListener('change', function() {
+      if (this.value === 'violencia') {
+        window.location.href = 'violencia.html';
+      }
+    });
+
+    function mostrarAviso() {
+      alert("Tus datos serán tratados conforme a las políticas de privacidad y confidencialidad, según lo establecido por CEMEFI.");
+    }
+  </script>
 </body>
 </html>

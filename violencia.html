@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Violencia de Género</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-marino">
+
+  <div class="logo-wrapper">
+    <img src="logo.jpg" alt="Logo de la empresa" class="logo">
+  </div>
+
+  <div class="wrapper">
+    <div class="container">
+      <h2>Denuncia por Violencia de Género</h2>
+
+      <p style="margin-bottom: 1rem;">
+        Tu seguridad es nuestra prioridad. Para dar seguimiento adecuado a denuncias por violencia de género, es obligatorio proporcionar tus datos. Esta información será tratada con absoluta confidencialidad, conforme a los principios establecidos por <strong>CEMEFI</strong>.
+      </p>
+
+      <form id="formViolencia">
+        <label for="nombre">Nombre completo:</label>
+        <input type="text" id="nombre" required />
+
+        <label for="correo">Correo electrónico:</label>
+        <input type="email" id="correo" required />
+
+        <label for="contra">¿Contra quién es la denuncia?</label>
+        <input type="text" id="contra" required />
+
+        <label for="descripcion">Descripción detallada:</label>
+        <textarea id="descripcion" rows="4" required></textarea>
+
+        <div class="nota">
+          <input type="checkbox" id="aviso" required />
+          <label for="aviso">Acepto el <a href="#" onclick="mostrarAviso()">aviso de privacidad</a>.</label>
+        </div>
+
+        <button type="submit">Enviar denuncia</button>
+      </form>
+
+      <div id="confirmacionViolencia" style="margin-top: 1rem;"></div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("formViolencia").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const nombre = document.getElementById("nombre").value.trim();
+      const correo = document.getElementById("correo").value.trim();
+      const contra = document.getElementById("contra").value.trim();
+      const descripcion = document.getElementById("descripcion").value.trim();
+
+      if (!nombre || !correo || !contra || !descripcion) {
+        alert("Por favor completa todos los campos requeridos.");
+        return;
+      }
+
+      const folio = Date.now() + Math.floor(Math.random() * 1000);
+      const fecha = new Date().toLocaleString();
+
+      const denuncia = {
+        folio,
+        descripcion,
+        correo,
+        anonima: false,
+        fecha,
+        categoria: "Violencia de género",
+        contra,
+        nombre,
+        status: "Pendiente",
+        comentarios: []
+      };
+
+      let denuncias = JSON.parse(localStorage.getItem("denuncias") || "[]");
+      denuncias.push(denuncia);
+      localStorage.setItem("denuncias", JSON.stringify(denuncias));
+
+      const mensaje = document.getElementById("confirmacionViolencia");
+      mensaje.textContent = `Tu denuncia ha sido enviada exitosamente. Tu folio es: ${folio}. Guarda este folio para consultar el estatus.`;
+      mensaje.style.color = "green";
+
+      document.getElementById("formViolencia").reset();
+    });
+
+    function mostrarAviso() {
+      alert("Tu información será tratada con estricta confidencialidad, conforme a los lineamientos establecidos por el CEMEFI para la atención de quejas sensibles.");
+    }
+  </script>
+</body>
+</html>

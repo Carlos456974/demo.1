@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panel de Administración - Buzón de Denuncias</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      background-color: #0a1a2f;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+    }
+    .logo-wrapper {
+      text-align: center;
+      padding: 1rem 0;
+    }
+    .logo {
+      max-width: 180px;
+      height: auto;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      color: #0a1a2f;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background-color: #04203a;
+      color: white;
+    }
+    select, textarea {
+      width: 100%;
+      padding: 0.3rem;
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 0.9rem;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 50px;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      background-color: #0a1a2f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #04203a;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo-wrapper">
+    <img src="logo.jpg" alt="Logo de la empresa" class="logo" />
+  </div>
+
+  <div class="container">
+    <h2>Panel de Administración - Denuncias</h2>
+    <table id="denunciasTable">
+      <thead>
+        <tr>
+          <th>Folio</th>
+          <th>Descripción</th>
+          <th>Categoría</th>
+          <th>Nombre/Correo</th>
+          <th>Estatus</th>
+          <th>Comentarios</th>
+          <th>Guardar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Aquí se cargarán las denuncias -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    function cargarDenuncias() {
+      const tbody = document.querySelector("#denunciasTable tbody");
+      tbody.innerHTML = "";
+      let denuncias = JSON.parse(localStorage.getItem("denuncias") || "[]");
+      if (denuncias.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='7' style='text-align:center'>No hay denuncias registradas.</td></tr>";
+        return;
+      }
+
+      denuncias.forEach((d, index) => {
+        const tr = document.createElement("tr");
+
+        // Folio
+        const tdFolio = document.createElement("td");
+        tdFolio.textContent = d.folio;
+        tr.appendChild(tdFolio);
+
+        // Descripción
+        const tdDesc = document.createElement("td");
+        tdDesc.textContent = d.descripcion;
+        tr.appendChild(tdDesc);
+
+        // Categoría
+        const tdCat = document.createElement("td");
+        tdCat.textContent = d.categoria || "General";
+        tr.appendChild(tdCat);
+
+        // Nombre o correo (si anónimo aparece como "Anónimo")
+        const tdNombre = document.createElement("td");
+        tdNombre.textContent = d.anonima ? "Anónimo" : d.correo || "Desconocido";
+        tr.appendChild(tdNombre);
+
+        // Estatus (select)
+        const tdStatus = document.createElement("td");
+        const selectStatus = document.createElement("select");
+        ["Pendiente", "En revisión", "Finalizado"].forEach(status => {
+          const option = document.createElement("option");
+          option.value = status;
+          option.textContent = status;
+          if (d.status === status) option.selected = true;
+          selectStatus.appendChild(option);
+        });
+        tdStatus.appendChild(selectStatus);
+        tr.appendChild(tdStatus);
+
+        // Comentarios (textarea)
+        const tdComent = document.createElement("td");
+        const textareaComent = document.createElement("textarea");
+        textareaComent.value = d.comentarios ? d.comentarios.join("\n") : "";
+        tdComent.appendChild(textareaComent);
+        tr.appendChild(tdComent);
+
+        // Botón guardar
+        const tdGuardar = document.createElement("td");
+        const btnGuardar = document.createElement("button");
+        btnGuardar.textContent = "Guardar";
+        btnGuardar.addEventListener("click", () => {
+          // Actualizar estado y comentarios
+          denuncias[index].status = selectStatus.value;
+          denuncias[index].comentarios = textareaComent.value ? textareaComent.value.split("\n") : [];
+          localStorage.setItem("denuncias", JSON.stringify(denuncias));
+          alert(`Denuncia ${denuncias[index].folio} actualizada.`);
+        });
+        tdGuardar.appendChild(btnGuardar);
+        tr.appendChild(tdGuardar);
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    window.onload = cargarDenuncias;
+  </script>
+</body>
+</html>

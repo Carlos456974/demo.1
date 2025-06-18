@@ -2,73 +2,164 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Buzón de Quejas</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      background-color: #0a1a2f; /* Azul marino */
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+    .logo-wrapper {
+      text-align: center;
+      padding: 1rem 0;
+    }
+    .logo {
+      max-width: 180px;
+      height: auto;
+    }
+    .wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 85vh;
+      padding: 0 1rem;
+    }
+    .container {
+      background: white;
+      color: #0a1a2f;
+      max-width: 600px;
+      width: 100%;
+      border-radius: 10px;
+      padding: 2rem 2.5rem;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    select, input[type="text"], textarea {
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 0.3rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    .nota {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    .nota a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    .nota a:hover {
+      text-decoration: underline;
+    }
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      background-color: #0a1a2f;
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #04203a;
+    }
+    #confirmation {
+      margin-top: 1rem;
+      color: green;
+      font-weight: bold;
+      text-align: center;
+    }
+    #nombreCampo {
+      display: block;
+    }
+  </style>
 </head>
-<body class="bg-marino">
+<body>
   <div class="logo-wrapper">
-    <img src="logo.jpg" alt="Logo de la empresa" class="logo">
+    <img src="logo.jpg" alt="Logo de la empresa" class="logo" />
   </div>
+
   <div class="wrapper">
     <div class="container">
-      <h2>Buzón de Quejas</h2>
+      <h2>Buzón de Denuncias</h2>
       <form id="formulario">
         <label for="anonimo">¿Deseas que sea anónima?</label>
-        <select id="anonimo" required>
+        <select id="anonimo" name="anonimo" required onchange="toggleNombreCampo()">
           <option value="sí">Sí</option>
           <option value="no">No</option>
         </select>
 
         <div id="nombreCampo">
-          <label for="nombre">Nombre:</label>
-          <input type="text" id="nombre">
-          <label for="correo">Correo electrónico:</label>
-          <input type="email" id="correo">
+          <label for="nombre">Nombre (obligatorio si no es anónima):</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" />
         </div>
 
         <label for="categoria">Categoría de la queja:</label>
-        <select id="categoria" required>
-          <option value="" disabled selected>Selecciona una</option>
-          <option value="violencia">Violencia de género</option>
-          <option value="maltrato">Maltrato de jefe</option>
-          <option value="compañero">Problema con compañero</option>
-          <option value="otro">Otro</option>
+        <select id="categoria" name="categoria" required>
+          <option value="" disabled selected>Selecciona una categoría</option>
+          <option value="General">General</option>
+          <option value="Maltrato">Maltrato</option>
+          <option value="Problema con compañero">Problema con compañero</option>
+          <option value="Problema con jefe">Problema con jefe</option>
+          <option value="Violencia de género">Violencia de género</option>
         </select>
 
-        <label for="descripcion">Descripción de la queja:</label>
-        <textarea id="descripcion" required></textarea>
+        <label for="descripcion">Descripción de la denuncia:</label>
+        <textarea id="descripcion" name="descripcion" required placeholder="Escribe aquí los detalles de tu denuncia..."></textarea>
 
         <div class="nota">
-          <input type="checkbox" id="aviso" required>
+          <input type="checkbox" id="aviso" name="aviso" required />
           <label for="aviso">
-            Acepto el <a href="#" onclick="mostrarAviso()">aviso de privacidad</a>.
+            Acepto el <a href="aviso.html" target="_blank">aviso de privacidad</a>.
           </label>
         </div>
 
-        <button type="submit">Enviar Queja</button>
+        <button type="submit">Enviar</button>
       </form>
 
       <div id="confirmation"></div>
-
-      <p style="margin-top:20px;">
-        <a href="estatus.html">Consultar estatus de una queja</a> |
-        <a href="login.html">Acceso Administrador</a>
+      <p style="margin-top: 20px; text-align: center;">
+        <a href="login.html" style="color: #0a1a2f; font-weight: bold;">Acceso Administrador</a>
       </p>
     </div>
   </div>
 
-  <script src="script.js"></script>
   <script>
-    document.getElementById('categoria').addEventListener('change', function() {
-      if (this.value === 'violencia') {
-        window.location.href = 'violencia.html';
+    function toggleNombreCampo() {
+      const anonimo = document.getElementById("anonimo").value;
+      const nombreCampo = document.getElementById("nombreCampo");
+      if (anonimo === "sí") {
+        nombreCampo.style.display = "none";
+      } else {
+        nombreCampo.style.display = "block";
       }
-    });
-
-    function mostrarAviso() {
-      alert("Tus datos serán tratados conforme a las políticas de privacidad y confidencialidad, según lo establecido por CEMEFI.");
     }
+    window.onload = toggleNombreCampo;
   </script>
+
+  <script src="script.js"></script>
 </body>
 </html>

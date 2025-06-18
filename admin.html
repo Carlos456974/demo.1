@@ -6,13 +6,32 @@
   <title>Panel de Administrador</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="bg-marino">
+
+  <div class="logo-wrapper">
+    <img src="logo.jpg" alt="Logo de la empresa" class="logo">
+  </div>
+
   <div class="wrapper">
     <div class="container">
-      <img src="logo.jpg" alt="Logo de la empresa" class="logo">
       <h2>Panel de Quejas</h2>
-      <div id="quejasContainer"></div>
-      <button onclick="logout()">Cerrar sesión</button>
+
+      <table border="1" width="100%" cellpadding="8" cellspacing="0" style="margin-top: 1rem;">
+        <thead>
+          <tr>
+            <th>Folio</th>
+            <th>Fecha</th>
+            <th>Categoría</th>
+            <th>Descripción</th>
+            <th>¿Anónima?</th>
+            <th>Estatus</th>
+            <th>Comentario Admin</th>
+          </tr>
+        </thead>
+        <tbody id="denunciasTableBody"></tbody>
+      </table>
+
+      <button id="logoutBtn" style="margin-top:20px;">Cerrar sesión</button>
     </div>
   </div>
 
